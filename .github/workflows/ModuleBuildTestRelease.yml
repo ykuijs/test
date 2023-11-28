@@ -24,6 +24,8 @@ jobs:
   Build_Stage_Package_Module:
     name: Package Module
     runs-on: windows-latest
+    outputs:
+      SkipWorkflow: ${{ steps.GitVersion.outputs.SkipWorkflow }}
     steps:
       - uses: actions/checkout@v4
         with:
