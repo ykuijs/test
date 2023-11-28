@@ -34,7 +34,7 @@ jobs:
         id: GitVersion
         run: |
           Write-Output "Running pipeline not necessary.....next steps should be skipped"
-          Write-Output "SkipWorkflow=true" >> $env:GITHUB_OUTPUT
+          #Write-Output "SkipWorkflow=true" >> $env:GITHUB_OUTPUT
         shell: pwsh
       - name: Build & Package Module
         if: steps.GitVersion.outputs.SkipWorkflow != 'true'
