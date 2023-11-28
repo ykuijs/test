@@ -32,9 +32,10 @@ jobs:
         id: GitVersion
         run: |
           Write-Output "Running pipeline not necessary.....next steps should be skipped"
-          exit 1
+          Write-Output "SkipWorkflow=true" >> $env:GITHUB_OUTPUT
         shell: pwsh
       - name: Build & Package Module
+        if: steps.GitVersion.outputs.SkipWorkflow != 'true'
         shell: pwsh
         run: 'Write-Host "Run Build"'
       - name: Publish Build Artifact
