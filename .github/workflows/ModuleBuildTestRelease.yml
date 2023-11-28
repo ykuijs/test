@@ -25,7 +25,7 @@ jobs:
     name: Package Module
     runs-on: windows-latest
     outputs:
-      SkipWorkflow: ${{ steps.GitVersion.outputs.SkipWorkflow }}
+      SkipWorkflow: ${{ steps.GitVersion.outputs.SkipWorkflow2 }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,14 +34,15 @@ jobs:
         id: GitVersion
         run: |
           Write-Output "Running pipeline not necessary.....next steps should be skipped"
-          #Write-Output "SkipWorkflow=true" >> $env:GITHUB_OUTPUT
+          Write-Output "SkipWorkflow2=true" >> $env:GITHUB_OUTPUT
+          Write-Output "SkipWorkflow=false" >> $env:GITHUB_OUTPUT
         shell: pwsh
       - name: Build & Package Module
         if: steps.GitVersion.outputs.SkipWorkflow != 'true'
         shell: pwsh
         run: 'Write-Host "Run Build"'
       - name: Publish Build Artifact
-        if: steps.GitVersion.outputs.SkipWorkflow != 'true'
+        if: steps.GitVersion.outputs.SkipWorkflow2 != 'true'
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.buildArtifactName }}
